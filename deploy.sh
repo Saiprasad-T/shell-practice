@@ -11,3 +11,4 @@ echo "Installing dependencies..."
 echo "Starting application..."
 
 echo "Deployment completed successfully"
+echo "Deployemnts second version is in progress"
