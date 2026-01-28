@@ -1,4 +1,6 @@
-name=$1
-name1=$2
-echo "Hello, $name! Welcome to Shell scripting."
-echo "Hello, $name1! Welcome to Shell scripting."
+#!/bin/bash
+
+echo "please enter the name::"
+read user_name
+
+echo "username is $user_name"
