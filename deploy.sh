@@ -1,14 +1,25 @@
 #!/bin/bash
 
-APP_NAME="expense-app"
-ENV="dev"
+userid=$(id -u)
+logs_folder="/var/log/shellscripts/"
+logs_file="/var/log/shellscripts/$0.log"
 
-echo "Starting deployment for $APP_NAME"
-echo "Environment: $ENV"
+if [ $userid -ne 0 ]; then
+ echo"you are not a root user"
+ exit 1
+fi
 
-echo "Pulling latest code..."
-echo "Installing dependencies..."
-echo "Starting application..."
 
-echo "Deployment completed successfully"
-echo "Deployemnts second version is in progress"
+VALIDATE(){
+if [$1 -ne 0 ]; then
+ echo "$2 .....Failure"
+else
+ echo "$2....Sucess"
+fi
+}
+
+for package in $@
+do 
+dnf install $package -y &>> $logs_file
+VALIDATE $? "$pacakage installation"
+done
