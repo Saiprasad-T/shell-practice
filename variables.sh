@@ -1,4 +1,9 @@
 #!/bin/bash
 
-read -s -p "enter your password:" password
-echo "you are from $password"
+read -p "enter a number:" num
+
+if [ $num -gt 10 ]; then
+ echo "$num is greater than 10"
+else 
+ echo "$num is smaller than 10"
+fi
