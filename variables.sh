@@ -7,3 +7,5 @@ if [ "$number" -lt 10 ]; then
 else 
  echo "Good number"
 fi
+
+echo "deploying the application"
