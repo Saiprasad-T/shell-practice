@@ -4,4 +4,7 @@ Hello (){
     echo "Hello bro, how are you"
 }
 
+Hello 
+Hello
+Hello
 Hello
