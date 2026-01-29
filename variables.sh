@@ -1,12 +1,19 @@
 #!/bin/bash
 
-read -p "enter a number:" number
-
-if [ "$number" -lt 10 ]; then
- echo "number is to small"
- exit 1
-else 
- echo "Good number"
+userid=$(id -u)
+if [ "$userid" -ne 0]; then
+ echo "you are not a root user, please run this script with root user"
 fi
 
-echo "deploying the application"
+VALIDATE(){
+ if [ $1 -ne 0 ]; then
+  echo "$2 .....failure"
+else
+ echo "$2 .....sucess"
+} 
+
+dnf install nginx -y
+VALIDATE $? "nginx installation"
+
+dnf install mysql-servert -y
+VALIDATE $? "mysql-server installation"
