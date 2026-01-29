@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo "please enter the name::"
-read user_name
-
-echo "username is $user_name"
+echo "enter your name"
+read user
+wlecome $user , DevOps journey starts now
