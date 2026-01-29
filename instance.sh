@@ -1,10 +1,7 @@
 #!/bin/bash
 
-Hello (){
-    echo "Hello $1, how are you"
+add (){
+    echo "$(($1+$2+$3))"
 }
 
-Hello sai
-Hello sakee
-Hello devops
-Hello sql
+add 25 25 25
