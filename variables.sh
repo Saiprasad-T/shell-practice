@@ -1,9 +1,9 @@
 #!/bin/bash
 
-read -p "enter a number:" num
+read -p "enter the env where you want to push the files:" stage
 
-if [ $num -gt 10 ]; then
- echo "$num is greater than 10"
-else 
- echo "$num is smaller than 10"
+if [ $stage==prod ]; then
+ echo "be carefull as this the production"
+else
+ echo "safe to proceed"
 fi
