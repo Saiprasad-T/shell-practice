@@ -5,3 +5,5 @@ if [ $(id -u) -ne 0 ]; then
 else
  echo "you are root user starting the installing"
 fi
+
+dnf intall nginx -y
