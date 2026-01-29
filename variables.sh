@@ -1,6 +1,8 @@
 #!/bin/bash
 
 userid=$(id -u)
+logs_folder="/var/log/shellscripts"
+log_file="/var/log/shellscripts/$0.log"
 if [ $userid -ne 0 ]; then
  echo "you are not a root user, please run this script with root user"
  exit 1
@@ -14,8 +16,8 @@ else
 fi
 } 
 
-dnf install nginx -y
+dnf install nginx -y &>> log_file
 VALIDATE $? "nginx installation"
 
-dnf install mysql-servert -y
+dnf install mysql-servert -y &>> log_file
 VALIDATE $? "mysql-server installation"
