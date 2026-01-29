@@ -1,4 +1,5 @@
 #!/bin/bash
 
-# Simple hello world script
-echo "Hello, Sakee! Welcome to Shell scripting practice."
+echo "script name is: $0"
+echo "first argument is: $1"
+echo "second argument is:$2"
