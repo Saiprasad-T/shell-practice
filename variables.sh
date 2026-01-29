@@ -2,4 +2,4 @@
 
 echo "enter your name"
 read user
-wlecome $user , DevOps journey starts now
+echo "wlecome $user , DevOps journey starts now"
