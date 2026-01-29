@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Hello (){
-    echo "Hello $1"
+    echo "Hello bro, how are you"
 }
 
 Hello
