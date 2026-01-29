@@ -1,4 +1,4 @@
 #!/bin/bash
 
-read -p "enter your city:" city
-echo "you are from $city"
+read -s -p "enter your password:" password
+echo "you are from $password"
