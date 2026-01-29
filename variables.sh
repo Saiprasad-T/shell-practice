@@ -1,8 +1,10 @@
 #!/bin/bash
 
-if [ $(id -u) -ne 0 ]; then
- echo "not a root user"
+read -p "enter a number:" number
+
+if [ "$number" -lt 10 ]; then
+ echo "number is to small"
  exit 1
-else
- echo "welcome root"
+else 
+ echo "Good number"
 fi
