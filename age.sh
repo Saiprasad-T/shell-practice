@@ -1,12 +1,16 @@
 #!/bin/bash
 
 
-read -p "please enter your age:" age
+read -p "please enter your marks:" marks
 
-if [[ $age -lt 18 ]]; then
- echo "you are a minor"
-elif [[ $age -ge 18 && $age -le 60 ]]; then
- echo "you are adult...."
-else
- echo "you are citizen"
+if [[ $marks -le 40 ]]; then
+ echo "fail....."
+elif [[ $marks -ge 40 && $marks -le 59 ]]; then
+ echo "pass....."
+elif [[ $marks -ge 60 && $marks -le 79 ]]; then
+ echo "first class...."
+elif [[ $marks -ge 80 && $marks -le 100 ]]; then
+ echo "distinction...."
+else 
+ echo "invalid number"
 fi
