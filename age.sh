@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "please enter your age:"
-read age
+
+read -p "please enter your age:" age
 
 if [[ $age -lt 18 ]]; then
  echo "you are a minor"
