@@ -31,3 +31,6 @@ verification $? "nginx"
 
 dnf install mysql-server -y 
 verification $? "mysql-server"
+
+dnf install nodejs -y
+verification $? "nodejs"
