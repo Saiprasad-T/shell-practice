@@ -21,6 +21,7 @@ if [ $1 -eq 0 ]; then
 else
  echo "$2 not installed" 
 fi
+}
 
 for pacakage in $@
 do
