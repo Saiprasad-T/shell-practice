@@ -36,6 +36,6 @@ do
      dnf install $pacakage -y
      verification $? $pacakage
   else 
-     echo -e "$G $pacakage already installed skipping now $N"
+     echo -e "$G $pacakage already installed $Y skipping now $N"
   fi
 done
