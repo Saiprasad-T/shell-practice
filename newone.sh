@@ -3,6 +3,7 @@
 #checks for the user_id, if user is not super user it fails
 user_id=$(id -u)
 #creating logs folder and logs file to store the logs
+logs_folder="/var/log/shell-scripts/"
 logs_file="/var/log/shell-scripts/$0.log"
 
 if [ $user_id -ne 0 ]; then &>> $log_file
