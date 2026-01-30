@@ -25,6 +25,12 @@ fi
 
 for pacakage in $@
 do
- dnf install $pacakage -y
- verification $? $pacakage
+    dnf list installed $pacakage
+  if [ $? -ne 0 ]; then
+     echo "$pacakage not installed installing now"
+     dnf install $pacakage -y
+     verification $? $pacakage
+  else 
+     echo "$pacakage already installed skipping now"
+  fi
 done
