@@ -1,5 +1,5 @@
 #!/bin/bash
 
-user=$name
-read $name
-echo "my name is $name"
+echo "enter your name & age:"
+read name age
+echo "my name is $name and my age is $age"
