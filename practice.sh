@@ -7,7 +7,7 @@ if [ $number -le 10 ]; then
  echo "number is too small"
 fi
 
-if [ $number -ge 10 ]; then
+if [ $number -ge 10 ] && [ $number -le 50 ]; then
  echo "number is good"
 fi
 
