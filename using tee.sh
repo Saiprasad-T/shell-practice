@@ -19,7 +19,6 @@ mkdir -p $logs_folder
 verification () {    
 if [ $1 -eq 0 ]; then
  echo "$2 installation is success" 
- exit 1
 else
  echo "$2 not installed" 
 fi
