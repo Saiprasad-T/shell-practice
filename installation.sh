@@ -8,7 +8,7 @@ if [[ $user_id -ne o ]]; then
 fi
 
 validate(){
-if [[ $1 -ne 0 ]]; then
+if [[ $1 -eq 0 ]]; then
  echo "$2 installation is succesfull"
  exit 1
 else
