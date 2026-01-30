@@ -10,6 +10,9 @@ if [ $user_id -ne 0 ]; then
  echo "please run it as root user..." | tee -a $logs_file
  exit 1
 fi
+
+mkdir -p $logs_folder
+
 #written a function as this requried for everystep
 verification () {    
 if [ $1 -eq 0 ]; then
