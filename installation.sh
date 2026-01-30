@@ -16,5 +16,6 @@ else
 fi
 }
 
-dnf install nginx252 -y
-validate $? "nginx"
+read -p "please enter the specific application:" app
+dnf install $app -y
+validate $? "$app"
