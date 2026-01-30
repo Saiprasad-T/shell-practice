@@ -13,3 +13,4 @@ fi
 
 if [ $number -gt 50 ]; then
  echo "number is too big"
+fi
