@@ -1,6 +1,8 @@
 #!/bin/bash
 
 user_id=$(id -u)
+Log_folder="/var/log/shell-scripts"
+log_file="/var/log/shell-scripts/$0.log"
 
 if [[ $user_id -ne o ]]; then
  echo "please run with root user...."
@@ -17,5 +19,5 @@ fi
 }
 
 read -p "please enter the specific application:" app
-dnf install $app -y
+dnf install $app -y &>> $log_file
 validate $? "$app"
