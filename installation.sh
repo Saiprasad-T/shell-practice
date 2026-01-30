@@ -7,11 +7,14 @@ if [[ $user_id -ne o ]]; then
  exit 1
 fi
 
-dnf install nginx -y
-
-if [[ $? -ne 0 ]]; then
- echo "installation is succesfull"
+validate(){
+if [[ $1 -ne 0 ]]; then
+ echo "$2 installation is succesfull"
  exit 1
 else
- echo "not installed...."
+ echo "$2 not installed...."
 fi
+}
+
+dnf install nginx252 -y
+validate $? "nginx"
