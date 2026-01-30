@@ -6,12 +6,12 @@ user_id=$(id -u)
 logs_folder="/var/log/shell-scripts/"
 logs_file="/var/log/shell-scripts/$0.log"
 
-if [ $user_id -ne 0 ]; then &>> $log_file
+if [ $user_id -ne 0 ]; then 
  echo "please run it as root user..."
  exit 1
 fi
 #written a function as this requried for everystep
-verification () {    &>> $log_file
+verification () {    
 if [ $1 -eq 0 ]; then
  echo "$2 installation is success"
 else
@@ -20,8 +20,8 @@ fi
 }
 
 #using dnf commanf for installing applications
-dnf install nginx -y  &>> $log_file
+dnf install nginx -y  &>> $logs_file
 verification $? "nginx"
 
-dnf install mysql-server -y &>> $log_file
+dnf install mysql-server -y &>> $logs_file
 verification $? "mysql-server"
