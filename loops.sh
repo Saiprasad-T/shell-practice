@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 user_id=$(id -u)
 #creating logs folder and logs file to store the logs
 logs_folder="/var/log/shell-scripts/"
