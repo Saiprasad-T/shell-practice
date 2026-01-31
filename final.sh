@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-trap 'echo"error has occured at line $LINE_NO and at command $BASH_COMMAND"' ERR
+trap 'echo"error has occured at line $LINENO and at command $BASH_COMMAND"' ERR
 
 
 user_id=$(id -u)
@@ -34,7 +34,7 @@ mkdir -p $logs_folder
 #for loop used for checking if the app is already installed it show throw an error
 for pacakage in $@
 do
- dnf list installed $pacakage
+     dnf list installed $pacakage
   if [ $? -ne 0 ]; then
      echo -e  "$R $pacakage not installed installing now $N"
      dnf install $pacakage -y
