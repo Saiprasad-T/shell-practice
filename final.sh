@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-trap 'echo"error has occured at lin $LINE_NO and at command $BASH_COMMAND"' ERR
+trap 'echo"error has occured at line $LINE_NO and at command $BASH_COMMAND"' ERR
 
 
 user_id=$(id -u)
