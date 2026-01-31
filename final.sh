@@ -34,11 +34,10 @@ mkdir -p $logs_folder
 #for loop used for checking if the app is already installed it show throw an error
 for pacakage in $@
 do
-    dnf list installed $pacakage
+ dnf list installed $pacakage
   if [ $? -ne 0 ]; then
      echo -e  "$R $pacakage not installed installing now $N"
      dnf install $pacakage -y
-     verification $? $pacakage
   else 
      echo -e "$G $pacakage already installed $Y skipping now $N"
   fi
