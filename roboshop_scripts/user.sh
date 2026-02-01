@@ -31,6 +31,9 @@ VALIDATE $? "disabling module"
 dnf module enable nodejs:20 -y
 VALIDATE $? "enabling module"
 
+dnf install nodejs -y
+VALIDATE $? "installing nodejs is"
+
 id roboshop &>>$LOGS_FILE
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOGS_FILE
@@ -47,7 +50,6 @@ cd /app
 unzip /tmp/user.zip
 VALIDATE $? "unzipping"
 
-cd /app
 npm install
 VALIDATE $? "installing dependencies"
 
