@@ -64,6 +64,9 @@ VALIDATE $? "enabling shipping"
 systemctl start shipping
 VALIDATE $? "starting shipping"
 
+dnf install mysql -y 
+VALIDATE $? "installing mysql"
+
 mysql -h mysqld.devopswiththota.online -uroot -pRoboShop@1 < /app/db/schema.sql
 VALIDATE $? "loading data"
 
