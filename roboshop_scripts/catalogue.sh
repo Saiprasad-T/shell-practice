@@ -42,9 +42,6 @@ else
     echo -e "Roboshop user already exist ... $Y SKIPPING $N"
 fi
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOGS_FILE
-VALIDATE $? "added system user as roboshop is"
-
 mkdir -p /app  &>>$LOGS_FILE
 VALIDATE $? "creating app for dependencies is"
 
