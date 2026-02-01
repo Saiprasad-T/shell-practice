@@ -3,7 +3,7 @@
 USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
-SCRIPT_DIR=$pwd
+SCRIPT_DIR=$PWD
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
@@ -53,7 +53,7 @@ VALIDATE $? "unzipping"
 npm install
 VALIDATE $? "installing dependencies"
 
-cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$LOGS_FILE
+cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
 VALIDATE $? "configuring systemd"
 
 systemctl daemon-reload &>>$LOGS_FILE
