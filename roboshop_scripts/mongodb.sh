@@ -3,6 +3,7 @@
 USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
+SCRIPT_DIR=$pwd
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
@@ -24,20 +25,20 @@ VALIDATE(){
     fi
 }
 
-cp mongo.repo > vim /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
 VALIDATE $? "copying mongo repo to yum.repos.d folder is"
 
-dnf install mongodb-org -y 
+dnf install mongodb-org -y &>>$LOGS_FILE
 VALIDATE $? "installing mongodb is"
 
-systemctl enable mongod 
+systemctl enable mongod &>>$LOGS_FILE
 VALIDATE $? "mongodb enable is"
 
-systemctl start mongod
+systemctl start mongod &>>$LOGS_FILE
 VALIDATE $? "started mongodb is"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>>$LOGS_FILE
 VALIDATE $? "Allowing remote connections"
 
-systemctl restart mongod
+systemctl restart mongod &>>$LOGS_FILE
 VALIDATE $? "restarting mongod is"
