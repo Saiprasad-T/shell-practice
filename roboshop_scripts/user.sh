@@ -39,17 +39,16 @@ else
     echo -e "Roboshop user already exist ... $Y SKIPPING $N"
 fi
 
-mkdir /app 
+mkdir -p /app 
 VALIDATE $? "moving to /app"
 
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
 cd /app 
-unzip /tmp/user.zip &>>$LOGS_FILE
+unzip /tmp/user.zip
 VALIDATE $? "unzipping"
 
-cd /app  
-
-npm install 
+cd /app
+npm install
 VALIDATE $? "installing dependencies"
 
 cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$LOGS_FILE
