@@ -64,13 +64,13 @@ VALIDATE $? "enabling shipping"
 systemctl start shipping
 VALIDATE $? "starting shipping"
 
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/schema.sql
+mysql -h mysqld.devopswiththota.online -uroot -pRoboShop@1 < /app/db/schema.sql
 VALIDATE $? "loading data"
 
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/app-user.sql 
+mysql -h mysqld.devopswiththota.online -uroot -pRoboShop@1 < /app/db/app-user.sql 
 VALIDATE $? "loading data"
 
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/master-data.sql
+mysql -h mysqld.devopswiththota.online -uroot -pRoboShop@1 < /app/db/master-data.sql
 VALIDATE $? "loading data"
 
 systemctl restart shipping
