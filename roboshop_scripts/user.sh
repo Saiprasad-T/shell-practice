@@ -47,7 +47,9 @@ cd /app
 unzip /tmp/user.zip &>>$LOGS_FILE
 VALIDATE $? "unzipping"
 
-npm install &>>$LOGS_FILE
+cd /app  
+
+npm install 
 VALIDATE $? "installing dependencies"
 
 cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$LOGS_FILE
