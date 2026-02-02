@@ -6,7 +6,8 @@ instance_type="t3.micro"
 ZONE_ID="Z054884433KSB5YRIKHVR"
 DOMAIN_NAME="devopswiththota.online"
 
-for instance in $@ #using for loop to create instances and storing intance_id in INSTANCE_ID varibale
+read -p "Enter instances names with separated spaces between them: " INSTANCES
+for instance in $INSTANCES  #using for loop to create instances and storing intance_id in INSTANCE_ID varibale
 do 
    INSTANCE_ID=$( aws ec2 run-instances \
     --image-id $ami_id \
