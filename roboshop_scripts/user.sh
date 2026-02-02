@@ -60,7 +60,7 @@ systemctl daemon-reload &>>$LOGS_FILE
 VALIDATE $? "reloading"
 
 systemctl enable user &>>$LOGS_FILE
-VALIDATE $? "enabling user"
+g
 
 systemctl start user &>>$LOGS_FILE
 VALIDATE $? "starting user app"
