@@ -66,9 +66,6 @@ copy () {
 cd /app 
 VALIDATE $? "moving to /app"
 
-rm -rf /app/*
-VALIDATE $? "Removing existing code"
-
 UNZIPPING () {
     if [ ! -d "/app/catalogue" ]; then
        unzip /tmp/catalogue.zip -d /app &>>$LOGS_FILE
