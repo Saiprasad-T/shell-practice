@@ -25,11 +25,24 @@ VALIDATE(){
     fi
 }
 
-cp $SCRIPT_DIR mongodb.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
-VALIDATE $? "setting up mongodb repo"
+setting_repo() {
+    if [ ! -f /etc/yum.repos.d/mongo.repo ]; then
+      cp $SCRIPT_DIR mongodb.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
+      VALIDATE $? "setting up mongodb repo"
+    else 
+       echo "repo already created for mongo"
+    fi
+}
 
-dnf install mongodb-org -y &>>$LOGS_FILE
-VALIDATE $? "installing mongodb"
+installing () {
+    dnf list installed mongodb-org
+    if [ $? -ne 0 ]; then
+      dnf install mongodb-org -y &>>$LOGS_FILE
+      VALIDATE $? "installing mongodb"
+    else
+      echo "mongodb-org has already installed"
+    fi
+}   
 
 systemctl enable mongod &>>$LOGS_FILE
 VALIDATE $? "enabling mongod"
@@ -37,6 +50,8 @@ VALIDATE $? "enabling mongod"
 systemctl start mongod  &>>$LOGS_FILE
 VALIDATE $? "starting mongod"
 
+grep -q "127.0.0.1" /etc/mongod.conf
+if [ $? ]
 sed -i 's/127.0.0.1/0.0.0.0/g'  /etc/mongod.conf &>>$LOGS_FILE
 VALIDATE $? "updating mongod.conf"
 
