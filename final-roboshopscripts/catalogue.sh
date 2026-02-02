@@ -64,18 +64,10 @@ copy () {
 }
  
 cd /app 
+
+unzip /tmp/catalogue.zip
 VALIDATE $? "moving to /app"
 
-UNZIPPING () {
-    if [ ! -d "/app/catalogue" ]; then
-       unzip /tmp/catalogue.zip -d /app &>>$LOGS_FILE
-       VALIDATE $? "UNZIPPING DATA is"
-    else
-       echo "FILE ALREADY UNZIPPED IN /APP"
-    fi
-}
-
-cd /app/catalogue
 npm install
 VALIDATE $? "installing dependencies" 
 
