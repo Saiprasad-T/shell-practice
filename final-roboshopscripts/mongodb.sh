@@ -15,7 +15,7 @@ Y="\e[33m"
 N="\e[0m"
 
 if [ $USERID -ne 0 ]; then
-    echo -e "$R Please run this script with root user access $N" | tee -a $LOGS_FILE
+    echo -e "$R PLEASE RUN THIS SCRIPT WITH ROOT USER ACCESS $N" | tee -a $LOGS_FILE
     exit 1
 fi
 
@@ -34,7 +34,7 @@ VALIDATE(){
 setting_repo() {
     if [ ! -f /etc/yum.repos.d/mongo.repo ]; then
       cp $SCRIPT_DIR mongodb.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
-      VALIDATE $? "setting up mongodb repo"
+      VALIDATE $? "SETTING UP MONGODB REPO"
     else 
        echo -e "$G MONGODB REPO ALREADY EXISTS $N" | tee -a $LOGS_FILE
     fi
@@ -42,29 +42,29 @@ setting_repo() {
 setting_repo
 
 installing () {
-    dnf list installed mongodb-org
+    dnf list installed mongodb-org &>/dev/null
     if [ $? -ne 0 ]; then
       dnf install mongodb-org -y &>>$LOGS_FILE
-      VALIDATE $? "installing mongodb"
+      VALIDATE $? "INSTALLING MONGODB"
     else
       echo -e "$G MONGODB  ALREADY INSTALLED $N" | tee -a $LOGS_FILE
     fi
 }   
 installing
 systemctl enable mongod &>>$LOGS_FILE
-VALIDATE $? "enabling mongod"
+VALIDATE $? "ENABLING MONGOD"
 
 systemctl start mongod  &>>$LOGS_FILE
-VALIDATE $? "starting mongod"
+VALIDATE $? "STARTING MONGOD"
 
 updating_config_file () {
    grep -qF "$REPLACEMENT" "$CONFIG_FILE"
     if [ $? -ne 0 ]; then
       sed -i "s|$SEARCH_PATTERN|$REPLACEMENT|" "$CONFIG_FILE" &>>$LOGS_FILE
-      VALIDATE $? "mongod.conf updated"
+      VALIDATE $? "MONGOD.CONF UPDATED"
 
       systemctl restart mongod &>>$LOGS_FILE #restarts only when gets updated
-      VALIDATE $? "restarting mongod"
+      VALIDATE $? "RESTARTING MONGOD"
     else
         echo -e "$G CONFIG  ALREADY UPDATED $N" | tee -a $LOGS_FILE
     fi
