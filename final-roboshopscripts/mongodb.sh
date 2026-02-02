@@ -39,6 +39,7 @@ setting_repo() {
        echo  "MongoDB repo already exists" | tee -a $LOGS_FILE
     fi
 }
+setting_repo
 
 installing () {
     dnf list installed mongodb-org
@@ -49,7 +50,7 @@ installing () {
       echo  "MongoDB  already installed" | tee -a $LOGS_FILE
     fi
 }   
-
+installing
 systemctl enable mongod &>>$LOGS_FILE
 VALIDATE $? "enabling mongod"
 
@@ -68,3 +69,4 @@ updating_config_file () {
         echo ".config  already updated" | tee -a $LOGS_FILE
     fi
 }
+updating_config_file
