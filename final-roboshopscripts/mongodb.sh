@@ -36,7 +36,7 @@ setting_repo() {
       cp $SCRIPT_DIR mongodb.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
       VALIDATE $? "setting up mongodb repo"
     else 
-       echo  "MongoDB repo already exists" | tee -a $LOGS_FILE
+       echo -e "$G MongoDB repo already exists $N" | tee -a $LOGS_FILE
     fi
 }
 setting_repo
@@ -47,7 +47,7 @@ installing () {
       dnf install mongodb-org -y &>>$LOGS_FILE
       VALIDATE $? "installing mongodb"
     else
-      echo  "MongoDB  already installed" | tee -a $LOGS_FILE
+      echo -e "$G MongoDB  already installed $N" | tee -a $LOGS_FILE
     fi
 }   
 installing
@@ -66,7 +66,7 @@ updating_config_file () {
       systemctl restart mongod &>>$LOGS_FILE #restarts only when gets updated
       VALIDATE $? "restarting mongod"
     else
-        echo ".config  already updated" | tee -a $LOGS_FILE
+        echo -e "$G .config  already updated $N" | tee -a $LOGS_FILE
     fi
 }
 updating_config_file
