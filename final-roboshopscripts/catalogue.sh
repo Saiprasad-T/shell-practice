@@ -69,7 +69,7 @@ VALIDATE $? "moving to /app"
 npm install
 VALIDATE $? "installing dependencies" 
 
-cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+cp $SCRIPT_DIR/catalogue.service /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Created systemctl service"
 
 systemctl daemon-reload &>>$LOGS_FILE
@@ -81,7 +81,7 @@ VALIDATE $? "ENABLING"
 systemctl start catalogue &>>$LOGS_FILE
 VALIDATE $? "STARTING CATALOGUE"
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR mongodb.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "copying from mongo.repo"
 
 dnf install mongodb-mongosh -y &>>$LOGS_FILE
