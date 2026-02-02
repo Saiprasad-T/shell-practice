@@ -4,14 +4,14 @@ USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 SCRIPT_DIR=$PWD
-MONGODB_HOST=mongodb.devopswiththota.online
+
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
 if [ $USERID -ne 0 ]; then
-    echo -e "$R Please run this script with root user access $N" | tee -a $LOGS_FILE
+    echo -e "$R PLEASE RUN THIS SCRIPT WITH ROOT USER ACCESS $N" | tee -a $LOGS_FILE
     exit 1
 fi
 
@@ -22,18 +22,26 @@ VALIDATE(){
         echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
         exit 1
     else
-        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+        echo -e "$G $2  SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
 
-dnf module disable nodejs -y &>>$LOGS_FILE
-VALIDATE $? "module disabled is"
+dnf module disable nodejs -y
+VALIDATE $? "MODULE DISABLED"
 
-dnf module enable nodejs:20 -y &>>$LOGS_FILE
-VALIDATE $? "enabled requried module is"
+dnf module enable nodejs:20 -y
+VALIDATE $? "MODULE ENABLED"
 
-dnf install nodejs -y &>>$LOGS_FILE
-VALIDATE $? "nodejs installation is"
+installation () {
+dnf list installed nodejs
+if [ $? -ne 0 ]; then
+   dnf install nodejs -y
+   VALIDATE $? "INSTALLING NODEJS APLLICATION"
+else
+   echo "ALREADY INSTALLED"
+fi
+}
+installation
 
 id roboshop &>>$LOGS_FILE
 if [ $? -ne 0 ]; then
@@ -43,48 +51,73 @@ else
     echo -e "Roboshop user already exist ... $Y SKIPPING $N"
 fi
 
-mkdir -p /app  &>>$LOGS_FILE
-VALIDATE $? "creating app for dependencies is"
+mkdir -p /app 
+VALIDATE $? "IF THERE ARE IS NO /APP IT WILL CREATE NEW DIRECTORY /APP"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOGS_FILE
-VALIDATE $? "copying catalogue code to tmp is"
-
+copy () {
+    if [ ! -f "/tmp/catalogue.zip" ]; then
+      curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOGS_FILE
+      VALIDATE $? "COPYING DATA FROM S3"
+    else 
+       echo "DATA ALREADY COPIED TO TMP" | tee -a $LOGS_FILE
+    fi
+}
+ 
 cd /app 
-VALIDATE $? "changing directory to /app is"
+VALIDATE $? "moving to /app"
 
-rm -rf /app/*
-VALIDATE $? "Removing existing code"
-
-unzip /tmp/catalogue.zip &>>$LOGS_FILE
-VALIDATE $? "unzipping the catalogue.zip in to the /app folder is"
+UNZIPPING () {
+    if [ ! -d "/app/catalogue" ]; then
+       unzip /tmp/catalogue.zip -d /app &>>$LOGS_FILE
+       VALIDATE $? "UNZIPPING DATA is"
+    else
+       echo "FILE ALREADY UNZIPPED IN /APP"
+    fi
+}
 
 npm install &>>$LOGS_FILE
-VALIDATE $? "installing dependencies is"
+VALIDATE $? "installing dependencies" 
 
-cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
-VALIDATE $? "Created systemctl service"
+updating_config_file() {
+    if [ ! -f /etc/systemd/system/catalogue.service ]; then
+      cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$LOGS_FILE
+      VALIDATE $? "SETTING UP CATALOGUE.SERVICE"
+    else 
+       echo -e "$G CATALOGUE.SERVICE ALREADY EXISTS $N" | tee -a $LOGS_FILE
+    fi
+}
 
-systemctl daemon-reload
-VALIDATE $? "daemon-reload is"
+systemctl daemon-reload &>>$LOGS_FILE
+VALIDATE $? "RELOADING" 
 
-systemctl enable catalogue 
-VALIDATE $? "catalogue enable is"
+systemctl enable catalogue &>>$LOGS_FILE
+VALIDATE $? "ENABLING"
 
 systemctl start catalogue &>>$LOGS_FILE
-VALIDATE $? "catalogue start is"
+VALIDATE $? "STARTING CATALOGUE"
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+setting_repo() {
+    if [ ! -f /etc/yum.repos.d/mongo.repo ]; then
+      cp $SCRIPT_DIR mongodb.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
+      VALIDATE $? "SETTING UP MONGODB REPO"
+    else 
+       echo -e "$G MONGODB REPO ALREADY EXISTS $N" | tee -a $LOGS_FILE
+    fi
+}
+
+setting_repo
+
 dnf install mongodb-mongosh -y &>>$LOGS_FILE
-VALIDATE $? "installing mongosh is"
+VALIDATE $? "INSTALLING MONGODB-MONGOSH"
 
 INDEX=$(mongosh --host $MONGODB_HOST --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
-if [ $INDEX -le 0 ]; then
+if [ $INDEX -eq -1 ]; then
     mongosh --host $MONGODB_HOST </app/db/master-data.js
     VALIDATE $? "Loading products"
 else
     echo -e "Products already loaded ... $Y SKIPPING $N"
 fi
 
-systemctl restart catalogue
+systemctl restart catalogue &>>$LOGS_FILE
 VALIDATE $? "Restarting catalogue"
