@@ -11,3 +11,5 @@ if [ $? -ne 0 ]; then
 else
     echo "mongod.conf already correct"
 fi
+
+grep -qF "bindIp: 127.0.0.1" "/etc/mongod.conf"
