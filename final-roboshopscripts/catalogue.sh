@@ -56,7 +56,7 @@ VALIDATE $? "IF THERE ARE IS NO /APP IT WILL CREATE NEW DIRECTORY /APP"
 
 copy () {
     if [ ! -f "/tmp/catalogue.zip" ]; then
-      curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOGS_FILE
+      curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
       VALIDATE $? "COPYING DATA FROM S3"
     else 
        echo "DATA ALREADY COPIED TO TMP" | tee -a $LOGS_FILE
@@ -65,6 +65,9 @@ copy () {
  
 cd /app 
 VALIDATE $? "moving to /app"
+
+rm -rf /app/*
+VALIDATE $? "Removing existing code"
 
 UNZIPPING () {
     if [ ! -d "/app/catalogue" ]; then
@@ -75,7 +78,7 @@ UNZIPPING () {
     fi
 }
 
-npm install &>>$LOGS_FILE
+npm install
 VALIDATE $? "installing dependencies" 
 
 updating_config_file() {
