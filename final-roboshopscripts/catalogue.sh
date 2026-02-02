@@ -78,6 +78,7 @@ UNZIPPING () {
     fi
 }
 
+cd /app 
 npm install
 VALIDATE $? "installing dependencies" 
 
