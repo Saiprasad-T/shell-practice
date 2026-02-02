@@ -64,6 +64,10 @@ copy () {
 }
  
 cd /app 
+VALIDATE $? "moving to /app directory"
+
+rm -rf /app/*
+VALIDATE $? "Removing existing code"
 
 unzip /tmp/catalogue.zip
 VALIDATE $? "moving to /app"
