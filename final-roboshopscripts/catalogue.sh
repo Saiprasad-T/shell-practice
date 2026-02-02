@@ -78,7 +78,7 @@ UNZIPPING () {
     fi
 }
 
-cd /app 
+cd /app/catalogue
 npm install
 VALIDATE $? "installing dependencies" 
 
