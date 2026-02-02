@@ -29,14 +29,14 @@ VALIDATE(){
         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
- 
+
 # pre requisite - please mongodb.repo while you are running script
 setting_repo() {
     if [ ! -f /etc/yum.repos.d/mongo.repo ]; then
       cp $SCRIPT_DIR mongodb.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
       VALIDATE $? "setting up mongodb repo"
     else 
-       echo "repo already created for mongo"
+       echo  "MongoDB repo already exists" | tee -a $LOGS_FILE
     fi
 }
 
@@ -46,7 +46,7 @@ installing () {
       dnf install mongodb-org -y &>>$LOGS_FILE
       VALIDATE $? "installing mongodb"
     else
-      echo "mongodb-org has already installed"
+      echo  "MongoDB  already installed" | tee -a $LOGS_FILE
     fi
 }   
 
@@ -59,12 +59,12 @@ VALIDATE $? "starting mongod"
 updating_config_file () {
    grep -qF "$REPLACEMENT" "$CONFIG_FILE"
     if [ $? -ne 0 ]; then
-      sed -i "s|$SEARCH_PATTERN|$REPLACEMENT|" "$CONFIG_FILE"
+      sed -i "s|$SEARCH_PATTERN|$REPLACEMENT|" "$CONFIG_FILE" &>>$LOGS_FILE
       VALIDATE $? "mongod.conf updated"
 
       systemctl restart mongod &>>$LOGS_FILE #restarts only when gets updated
       VALIDATE $? "restarting mongod"
     else
-        echo "mongod.conf already correct"
+        echo ".config  already updated" | tee -a $LOGS_FILE
     fi
 }
