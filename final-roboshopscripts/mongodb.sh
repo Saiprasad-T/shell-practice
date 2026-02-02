@@ -52,10 +52,10 @@ installing () {
 }   
 installing
 systemctl enable mongod &>>$LOGS_FILE
-VALIDATE $? " ENABLING MONGOD"
+VALIDATE $? "ENABLING MONGOD"
 
 systemctl start mongod  &>>$LOGS_FILE
-VALIDATE $? " STARTING MONGOD"
+VALIDATE $? "STARTING MONGOD"
 
 updating_config_file () {
    grep -qF "$REPLACEMENT" "$CONFIG_FILE"
