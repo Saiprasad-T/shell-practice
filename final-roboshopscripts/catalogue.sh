@@ -81,16 +81,8 @@ VALIDATE $? "ENABLING"
 systemctl start catalogue &>>$LOGS_FILE
 VALIDATE $? "STARTING CATALOGUE"
 
-setting_repo() {
-    if [ ! -f /etc/yum.repos.d/mongo.repo ]; then
-      cp $SCRIPT_DIR mongodb.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
-      VALIDATE $? "SETTING UP MONGODB REPO"
-    else 
-       echo -e "$G MONGODB REPO ALREADY EXISTS $N" | tee -a $LOGS_FILE
-    fi
-}
-
-setting_repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+VALIDATE $? "copying from mongo.repo"
 
 dnf install mongodb-mongosh -y &>>$LOGS_FILE
 VALIDATE $? "INSTALLING MONGODB-MONGOSH"
