@@ -3,7 +3,7 @@
 USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
-SCRIPT_DIR=$pwd
+SCRIPT_DIR=$PWD
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
@@ -37,7 +37,7 @@ VALIDATE $? "enabling mongod"
 systemctl start mongod  &>>$LOGS_FILE
 VALIDATE $? "starting mongod"
 
-Sed -i 's/127.0.0.1/0.0.0.0/g'  /etc/mongod.conf &>>$LOGS_FILE
+sed -i 's/127.0.0.1/0.0.0.0/g'  /etc/mongod.conf &>>$LOGS_FILE
 VALIDATE $? "updating mongod.conf"
 
 systemctl restart mongod &>>$LOGS_FILE
