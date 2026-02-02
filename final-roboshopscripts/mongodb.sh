@@ -25,7 +25,7 @@ VALIDATE(){
     fi
 }
 
-cp $SCRIPT_DIR/mongodb.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
+cp $SCRIPT_DIR mongodb.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
 VALIDATE $? "setting up mongodb repo"
 
 dnf install mongodb-org -y &>>$LOGS_FILE
