@@ -71,7 +71,7 @@ VALIDATE $? "installing dependencies"
 
 updating_config_file() {
     if [ ! -f /etc/systemd/system/catalogue.service ]; then
-      cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$LOGS_FILE
+      cp $SCRIPT_DIR catalogue.service /etc/systemd/system/catalogue.service &>>$LOGS_FILE
       VALIDATE $? "SETTING UP CATALOGUE.SERVICE"
     else 
        echo -e "$G CATALOGUE.SERVICE ALREADY EXISTS $N" | tee -a $LOGS_FILE
