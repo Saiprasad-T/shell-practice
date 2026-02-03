@@ -32,6 +32,7 @@ installing (){
 else
    echo "$G PYTHON3 GCC PYTHON3-DEVEL ALREADY INSTALLED $N ..$Y SKIPPING FOR NOW $N"
 fi
+}
 
 id roboshop &>>$LOGS_FILE
 if [ $? -ne 0 ]; then
