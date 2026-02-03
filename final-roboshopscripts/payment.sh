@@ -24,16 +24,9 @@ VALIDATE(){
         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
-installing (){
- dnf list installed python3 gcc python3-devel
- if [ $? -ne 0 ]; then
-   dnf install python3 gcc python3-devel -y
-   VALIDATE $? "INSTALLING PYTHON3 GCC PYTHON3-DEVEL"
-else
-   echo "$G PYTHON3 GCC PYTHON3-DEVEL ALREADY INSTALLED $N ..$Y SKIPPING FOR NOW $N"
-fi
-}
-installing
+
+dnf install python3 gcc python3-devel -y
+VALIDATE $? "INSTALLING PYTHON3 GCC PYTHON3-DEVEL"
 
 id roboshop &>>$LOGS_FILE
 if [ $? -ne 0 ]; then
