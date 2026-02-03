@@ -31,19 +31,19 @@ VALIDATE $? "MOVING TO YUM.REPOS.D DIRECTORY"
 
 # Check if rabbitmq.repo exists
 if [ -f "rabbitmq.repo" ]; then
-    echo "Removing existing rabbitmq.repo"
-    rm -f rabbitmq.repo
+    echo -e  "$R REMOVING EXISTING RABBITMQ.REPO $N"
+    rm -f rabbitmq.repo &>>$LOGS_FILE
 else
-    echo "No existing rabbitmq.repo, will create new one"
+    echo -e "$Y NO EXISTING RABBITMQ.REPO, WILL CREATE NEW ONE $N"
 fi
 
-cp $SCRIPT_DIR/rabbitmq.repo //etc/yum.repos.d/rabbitmq.repo
+cp $SCRIPT_DIR/rabbitmq.repo //etc/yum.repos.d/rabbitmq.repo &>>$LOGS_FILE
 VALIDATE $? "COPYING REPO"
 
 installation () {
-dnf list installed rabbitmq-server
+dnf list installed rabbitmq-server &>/dev/null
 if [ $? -ne 0 ]; then
-   dnf install rabbitmq-server -y
+   dnf install rabbitmq-server -y &>>$LOGS_FILE
    VALIDATE $? "INSTALLING RABBITMQ-SERVER APLLICATION"
 else
    echo "RABBITMQ-SERVER ALREADY INSTALLED"
@@ -51,17 +51,17 @@ fi
 }
 installation
 
-systemctl enable rabbitmq-server
+systemctl enable rabbitmq-server &>>$LOGS_FILE
 VALIDATE $? "ENABLING SYSTEMCTL FOR RABBITMQ-SEVER"
 
-systemctl start rabbitmq-server
+systemctl start rabbitmq-server &>>$LOGS_FILE
 VALIDATE $? "STARTING SYSTEMCTL RABBITMQ-SERVER"
 
-id roboshop &>>$LOGS_FILE
+rabbitmqctl list_users | grep -w roboshop &>>$LOGS_FILE
 if [ $? -ne 0 ]; then
-    rabbitmqctl add_user roboshop roboshop123
+    rabbitmqctl add_user roboshop roboshop123 &>>$LOGS_FILE
     rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
     VALIDATE $? "CREATING SYSTEM USER"
 else
-    echo -e "Roboshop user already exist ... $Y SKIPPING $N"
+    echo -e "ROBOSHOP USER ALREADY EXIST ... $Y SKIPPING $N"
 fi
