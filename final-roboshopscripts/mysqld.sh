@@ -44,7 +44,7 @@ systemctl start mysqld
 VALIDATE $? "STARTING MYSQLD"
 
 mysql_secure_installation (){
-dnf list installed mysql_secure_installation
+mysql -u root -pRoboShop@1 -e "SELECT 1;" &>>$LOGS_FILE
 if [ $? -ne 0 ]; then
    mysql_secure_installation --set-root-pass RoboShop@1
    VALIDATE $? "MYSQL_SECURE_INSTALLATION"
