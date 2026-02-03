@@ -32,7 +32,7 @@ if [ $? -ne 0 ]; then
    dnf install mysql-server -y
    VALIDATE $? "INSTALLING MYSQLD APLLICATION"
 else
-   echo "ALREADY INSTALLED"
+   echo -e "$G ALREADY INSTALLED $N"
 fi
 }
 installation
