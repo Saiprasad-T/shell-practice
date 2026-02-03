@@ -4,7 +4,7 @@ USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 SCRIPT_DIR=$PWD
-MYSQL_HOST=mysqld.devopswiththota.online
+MYSQL_HOST="mysqld.devopswiththota.online"
 
 R="\e[31m"
 G="\e[32m"
