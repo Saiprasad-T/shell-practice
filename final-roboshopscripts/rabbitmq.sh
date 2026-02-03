@@ -46,7 +46,7 @@ if [ $? -ne 0 ]; then
    dnf install rabbitmq-server -y &>>$LOGS_FILE
    VALIDATE $? "INSTALLING RABBITMQ-SERVER APLLICATION"
 else
-   echo "RABBITMQ-SERVER ALREADY INSTALLED"
+   echo  -e "$G RABBITMQ-SERVER ALREADY INSTALLED $N"
 fi
 }
 installation
@@ -60,7 +60,7 @@ VALIDATE $? "STARTING SYSTEMCTL RABBITMQ-SERVER"
 rabbitmqctl list_users | grep -w roboshop &>>$LOGS_FILE
 if [ $? -ne 0 ]; then
     rabbitmqctl add_user roboshop roboshop123 &>>$LOGS_FILE
-    rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+    rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>/dev/null
     VALIDATE $? "CREATING SYSTEM USER"
 else
     echo -e "ROBOSHOP USER ALREADY EXIST ... $Y SKIPPING $N"
