@@ -27,10 +27,10 @@ VALIDATE(){
 }
 
 installation () {
-dnf list installed mysql-server
+dnf list installed mysql-server &>/dev/null
 if [ $? -ne 0 ]; then
    dnf install mysql-server -y
-   VALIDATE $? "INSTALLING NODEJS APLLICATION"
+   VALIDATE $? "INSTALLING MYSQLD APLLICATION"
 else
    echo "ALREADY INSTALLED"
 fi

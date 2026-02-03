@@ -33,7 +33,7 @@ dnf module enable nodejs:20 -y
 VALIDATE $? "MODULE ENABLED"
 
 installation () {
-dnf list installed nodejs
+dnf list installed nodejs &>/dev/null
 if [ $? -ne 0 ]; then
    dnf install nodejs -y
    VALIDATE $? "INSTALLING NODEJS APLLICATION"
