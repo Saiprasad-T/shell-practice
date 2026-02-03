@@ -52,4 +52,5 @@ else
    echo "ALREADY INSTALLED MYSQL_SECURE_INSTALLATION AND UPDATED ROOT PASSWORD"
 fi
 }
-   
+
+mysql_secure_installation
