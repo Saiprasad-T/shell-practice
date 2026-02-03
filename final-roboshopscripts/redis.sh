@@ -48,7 +48,7 @@ installing () {
 installing
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
-protected-mode from yes to no in /etc/redis/redis.conf &>>$LOGS_FILE
+sed -i 's/protected-mode yes/protected-mode no/'  /etc/redis/redis.conf &>>$LOGS_FILE
 
 systemctl enable redis &>>$LOGS_FILE
 VALIDATE $? "enabling redis"
