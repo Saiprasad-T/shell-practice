@@ -47,6 +47,7 @@ mysql_secure_installation (){
 dnf list installed mysql_secure_installation
 if [ $? -ne 0 ]; then
    mysql_secure_installation --set-root-pass RoboShop@1
+   VALIDATE $? "MYSQL_SECURE_INSTALLATION"
 else 
    echo "ALREADY INSTALLED MYSQL_SECURE_INSTALLATION AND UPDATED ROOT PASSWORD"
 fi
