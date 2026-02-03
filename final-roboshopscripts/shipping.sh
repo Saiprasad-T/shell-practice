@@ -95,20 +95,15 @@ installing_my_sql
 MYSQL_HOST="mysqld.devopswiththota.online"
 
 # Check if database exists
-mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e "USE cities;" &>>$LOGS_FILE
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities'
 if [ $? -ne 0 ]; then
-    echo "Database 'cities' not found. Loading SQL files..." | tee -a $LOGS_FILE
 
     mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOGS_FILE
-    VALIDATE $? "Loading schema.sql"
-
     mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$LOGS_FILE
-    VALIDATE $? "Loading app-user.sql"
-
     mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOGS_FILE
-    VALIDATE $? "Loading master-data.sql"
+    VALIDATE $? "Loaded data into MySQL"
 else
-    echo -e "Database 'cities' already exists ... $Y SKIPPING SQL LOAD $N" | tee -a $LOGS_FILE
+    echo -e "data is already loaded ... $Y SKIPPING $N"
 fi
 
 
