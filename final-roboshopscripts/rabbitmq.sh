@@ -63,5 +63,5 @@ if [ $? -ne 0 ]; then
     rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>/dev/null
     VALIDATE $? "CREATING SYSTEM USER"
 else
-    echo -e "ROBOSHOP USER ALREADY EXIST ... $Y SKIPPING $N"
+    echo -e "$G ROBOSHOP USER ALREADY EXIST $N ... $Y SKIPPING $N"
 fi
