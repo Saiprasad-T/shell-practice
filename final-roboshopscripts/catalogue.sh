@@ -4,6 +4,7 @@ USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 SCRIPT_DIR=$PWD
+MONGODB_HOST=mongodb.devopswiththota.online
 
 R="\e[31m"
 G="\e[32m"
