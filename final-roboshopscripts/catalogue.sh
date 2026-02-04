@@ -97,5 +97,5 @@ else
     echo -e "Products already loaded ... $Y SKIPPING $N"
 fi
 
-systemctl restart catalogue &>>$LOGS_FILE
+systemctl restart catalogue
 VALIDATE $? "Restarting catalogue"
