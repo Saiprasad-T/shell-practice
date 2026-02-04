@@ -26,16 +26,16 @@ VALIDATE(){
     fi
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>>$LOGS_FILE
 VALIDATE $? "MODULE DISABLED"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOGS_FILE
 VALIDATE $? "MODULE ENABLED"
 
 installation () {
-dnf list installed nodejs
+dnf list installed nodejs &>>$LOGS_FILE
 if [ $? -ne 0 ]; then
-   dnf install nodejs -y
+   dnf install nodejs -y &>>$LOGS_FILE
    VALIDATE $? "INSTALLING NODEJS APLLICATION"
 else
    echo "ALREADY INSTALLED"
