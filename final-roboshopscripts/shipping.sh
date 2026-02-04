@@ -81,17 +81,6 @@ VALIDATE $? "STARTING SHIPPING"
 
 dnf install mysql -y &>>$LOGS_FILE
 
-installing_my_sql () {
-    dnf list installed mysql &>/dev/null
-    if [ $? -ne 0 ]; then
-      dnf install mysql  -y &>>$LOGS_FILE
-      VALIDATE $? "INSTALLING MYSQL"
-    else
-      echo -e "$G MYSQL  ALREADY INSTALLED $N" | tee -a $LOGS_FILE
-    fi
-} 
-installing_my_sql
-
 # Check if database exists
 mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities'
 if [ $? -ne 0 ]; then
