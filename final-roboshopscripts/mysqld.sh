@@ -43,14 +43,5 @@ VALIDATE $? "ENABLING MYSQLD"
 systemctl start mysqld  &>>$LOGS_FILE
 VALIDATE $? "STARTING MYSQLD"
 
-mysql_secure_installation (){
-mysql -u root -pRoboShop@1 -e "SELECT 1;" &>>$LOGS_FILE
-if [ $? -ne 0 ]; then
-   mysql_secure_installation --set-root-pass RoboShop@1 &>>$LOGS_FILE
-   VALIDATE $? "MYSQL_SECURE_INSTALLATION"
-else 
-   echo "ALREADY INSTALLED MYSQL_SECURE_INSTALLATION AND UPDATED ROOT PASSWORD"
-fi
-}
-
-mysql_secure_installation
+mysql_secure_installation --set-root-pass RoboShop@1
+VALIDATE $? "Setup root password"
