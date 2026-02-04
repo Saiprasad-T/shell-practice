@@ -4,7 +4,6 @@ USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 SCRIPT_DIR=$PWD
-MYSQL_HOST=mysqld.devopswiththota.online
 
 R="\e[31m"
 G="\e[32m"
@@ -92,7 +91,7 @@ installing_my_sql () {
 } 
 installing_my_sql
 
-MYSQL_HOST="mysqld.devopswiththota.online"
+MYSQL_HOST=mysqld.devopswiththota.online
 
 # Check if database exists
 mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities'
