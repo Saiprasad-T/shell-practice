@@ -26,10 +26,10 @@ VALIDATE(){
     fi
 }
 
-dnf module disable nginx -y
+dnf module disable nginx -y &>>$LOGS_FILE
 VALIDATE $? "MODULE DISABLED"
 
-dnf module enable nginx:1.24 -y
+dnf module enable nginx:1.24 -y &>>$LOGS_FILE
 VALIDATE $? "MODULE ENABLED"
 
 installing () {
@@ -43,28 +43,28 @@ installing () {
 } 
 installing
 
-systemctl enable nginx 
+systemctl enable nginx &>>$LOGS_FILE
 VALIDATE $? "ENABLING NGINX IS"
 
-systemctl start nginx 
+systemctl start nginx &>>$LOGS_FILE
 VALIDATE $? "STARTING NGINX IS"
 
-rm -rf /usr/share/nginx/html/* 
+rm -rf /usr/share/nginx/html/*  &>>$LOGS_FILE
 VALIDATE $? "REMOVING HTML SCRIPTS"
 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
 VALIDATE $? "DOWNLOADING IT FROM S3"
 
-cd /usr/share/nginx/html 
+cd /usr/share/nginx/html  &>>$LOGS_FILE
 
-rm -rf /usr/share/nginx/html/* 
+rm -rf /usr/share/nginx/html/*  &>>$LOGS_FILE
 VALIDATE $? "REMOVING HTML SCRIPTS"
 
-unzip /tmp/frontend.zip
+unzip /tmp/frontend.zip &>>$LOGS_FILE
 VALIDATE $? "UNZIPPING INTO /USR/SHARE/NGINX/HTML"
 
-cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf
+cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>$LOGS_FILE
 VALIDATE $? "CONFIGURING NGINX.CONF FILE"
 
-systemctl restart nginx 
+systemctl restart nginx &>>$LOGS_FILE
 VALIDATE $? "RESTARTING NGINX"
