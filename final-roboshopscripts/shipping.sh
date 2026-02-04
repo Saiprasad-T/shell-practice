@@ -4,7 +4,7 @@ USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 SCRIPT_DIR=$PWD
-MYSQL_HOST="mysqld.devopswiththota.online"
+MYSQL_HOST=mysqld.devopswiththota.online
 
 R="\e[31m"
 G="\e[32m"
@@ -27,16 +27,8 @@ VALIDATE(){
     fi
 }
 
-installing () {
-    dnf list installed maven &>/dev/null
-    if [ $? -ne 0 ]; then
-      dnf install maven -y &>>$LOGS_FILE
-      VALIDATE $? "INSTALLING MAVEN"
-    else
-      echo -e "$G MAVEN  ALREADY INSTALLED $N" | tee -a $LOGS_FILE
-    fi
-} 
-installing
+dnf install maven -y &>>$LOGS_FILE
+VALIDATE $? "INSTALLING MAVEN"
 
 id roboshop &>>$LOGS_FILE
 if [ $? -ne 0 ]; then
@@ -56,34 +48,26 @@ cd /app &>>$LOGS_FILE
 VALIDATE $? "MOVING /APP DIRECTORY"
 
 rm -rf /app/* &>>$LOGS_FILE
-VALIDATE $? "DELETING PREVIOS CODE FROM /APP FOLDER"
+VALIDATE $? "DELETING PREVIOUS CODE FROM /APP FOLDER"
 
 unzip /tmp/shipping.zip &>>$LOGS_FILE
 VALIDATE $? "UNZIPPING INTO /APP FOLDER"
 
+cd /app
 mvn clean package &>>$LOGS_FILE
 VALIDATE $? "INSTALLING DEPENDENCIES"
 
-mv target/shipping-1.0.jar shipping.jar &>>$LOGS_FILE
+mv target/shipping-1.0.jar shipping.jar
 VALIDATE $? "MOVING 1.0 JAR to .JAR"
 
-cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service &>>$LOGS_FILE
+cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
 VALIDATE $? "COPYING .SERVICE FILE INTO SYSTEMD SERVICES"
-
-systemctl daemon-reload &>>$LOGS_FILE
-VALIDATE $? "RELOADING DAEMON"
-
-systemctl enable shipping &>>$LOGS_FILE
-VALIDATE $? "ENABLING SHIPPING"
-
-systemctl start shipping &>>$LOGS_FILE
-VALIDATE $? "STARTING SHIPPING"
 
 dnf install mysql -y &>>$LOGS_FILE
 
-# Check if database exists
 mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities'
 if [ $? -ne 0 ]; then
+
     mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOGS_FILE
     mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$LOGS_FILE
     mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOGS_FILE
@@ -92,7 +76,7 @@ else
     echo -e "data is already loaded ... $Y SKIPPING $N"
 fi
 
-
-systemctl restart shipping &>>$LOGS_FILE
-VALIDATE $? "RESTARTING SHIPPING"
+systemctl enable shipping &>>$LOGS_FILE
+systemctl start shipping
+VALIDATE $? "Enabled and started shipping"
 
