@@ -70,7 +70,7 @@ VALIDATE $? "moving to /app"
 npm install
 VALIDATE $? "installing dependencies" 
 
-cp $SCRIPT_DIR/catalogue.service /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "Created systemctl service"
 
 systemctl daemon-reload &>>$LOGS_FILE
